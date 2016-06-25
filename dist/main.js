@@ -29,7 +29,7 @@ function getNumberOfBuilders(spawn) {
   var newNumberOfBuilders = 0;
 
   if(targets.length) {
-    newNumberOfBuilders = Math.floor(targets.length / 3) + 1;
+    newNumberOfBuilders = Math.floor(targets.length / 4) + 1;
   }
   return newNumberOfBuilders;
 }
