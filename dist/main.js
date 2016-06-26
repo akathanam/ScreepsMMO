@@ -15,7 +15,8 @@ function sortDamagedWalls(spawn) {
       return (((structure.structureType == STRUCTURE_TOWER)
       || (structure.structureType == STRUCTURE_WALL)
       || (structure.structureType == STRUCTURE_ROAD)
-      || (structure.structureType == STRUCTURE_RAMPART))
+      || (structure.structureType == STRUCTURE_RAMPART)
+      || (structure.structureType == STRUCTURE_CONTAINER))
       && (structure.hits < (structure.hitsMax / 3)));
     }
   });
