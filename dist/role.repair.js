@@ -26,7 +26,7 @@ var roleRepairer = {
 
       var target = Game.getObjectById(creep.memory.maxDamagedWall);
       if ((target) && (target.hits < target.hitsMax)) {
-        if((creep.pos.findInRange(FIND_SOURCES, 2).length > 0) || (creep.repair(target) == ERR_NOT_IN_RANGE)) {
+        if((creep.pos.findInRange(FIND_SOURCES, 1).length > 0) || (creep.repair(target) == ERR_NOT_IN_RANGE)) {
           creep.moveTo(target, {reusePath: 5});
         }
       }
