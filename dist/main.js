@@ -25,8 +25,13 @@ function sortDamagedWalls(spawn) {
 }
 
 function getNumberOfBuilders(spawn) {
-  var targets = spawn.room.find(FIND_CONSTRUCTION_SITES);
-  var newNumberOfBuilders = 0;
+  var targets = spawn.room.find(FIND_CONSTRUCTION_SITES, {
+    filter: (structure) => {
+      return ((structure.structureType == STRUCTURE_TOWER) || (structure.structureType == STRUCTURE_ROAD));
+    }
+  }
+  );
+  var newNumberOfBuilders = 1;
 
   if(targets.length) {
     newNumberOfBuilders = Math.floor(targets.length / 3) + 1;
