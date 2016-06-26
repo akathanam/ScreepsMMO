@@ -7,7 +7,7 @@ var roleHarvester = {
     if(creep.carry.energy < creep.carryCapacity) {
       var source = creep.pos.findClosestByRange(FIND_SOURCES);
       if(creep.harvest(source) == ERR_NOT_IN_RANGE) {
-        creep.moveTo(source);
+        creep.moveTo(source, {reusePath: 5});
       }
     }
     else {
@@ -20,11 +20,11 @@ var roleHarvester = {
         });
         if(targets.length > 0) {
           if(creep.transfer(targets[0], RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
-            creep.moveTo(targets[0]);
+            creep.moveTo(targets[0], {reusePath: 5});
           }
         } else {
           if(creep.upgradeController(creep.room.controller) == ERR_NOT_IN_RANGE) {
-            creep.moveTo(creep.room.controller);
+            creep.moveTo(creep.room.controller, {reusePath: 5});
           }
         }
       }
