@@ -18,7 +18,10 @@ var roleBuilder = {
           creep.moveTo(targets[0], {reusePath: 5});
         }
       } else {
-        creep.moveTo(10,27, {reusePath: 5});
+                  if(creep.upgradeController(creep.room.controller) == ERR_NOT_IN_RANGE) {
+                                creep.moveTo(creep.room.controller, {reusePath: 5});
+                                          }
+
       }
     }
     else {
