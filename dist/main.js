@@ -36,7 +36,7 @@ function getNumberOfBuilders(spawn) {
   if(targets.length) {
     newNumberOfBuilders = Math.floor(targets.length / 3) + 1;
   }
-  return newNumberOfBuilders;
+  return Math.min(newNumberOfBuilders,spawn.memory.maxPopulation['builder']);
 }
 
 function getNumberOfRepairers(spawn) {
@@ -45,7 +45,7 @@ function getNumberOfRepairers(spawn) {
   if((spawn.memory.idsOfDamagedWalls) && (spawn.memory.idsOfDamagedWalls.length)) {
     newNumberOfRepairers = Math.floor(spawn.memory.idsOfDamagedWalls.length / 10) + 1;
   }
-  return newNumberOfRepairers
+  return Math.min(newNumberOfRepairers,spawn.memory.maxPopulation['repairer']);
 }
 
 module.exports.loop = function () {
