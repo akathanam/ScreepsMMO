@@ -31,7 +31,7 @@ function getNumberOfBuilders(spawn) {
     }
   }
   );
-  var newNumberOfBuilders = 2;
+  var newNumberOfBuilders = 3;
 
   if(targets.length) {
     newNumberOfBuilders = Math.floor(targets.length / 3) + 1;
