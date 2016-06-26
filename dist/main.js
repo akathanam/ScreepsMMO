@@ -107,10 +107,4 @@ module.exports.loop = function () {
   var tower = Game.getObjectById('576e404267da7ce57838e072');
   roleTower.run(tower);
 
-  /*   var hostiles = Game.rooms[roomName].find(FIND_HOSTILE_CREEPS);
-
-  if(hostiles.length > 0) {
-  var username = hostiles[0].owner.username;
-  Game.notify(`User ${username} spotted in room ${roomName}`);
-}*/
 }
