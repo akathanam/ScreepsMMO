@@ -12,11 +12,7 @@ var misc = require('misc');
 function sortDamagedWalls(spawn) {
   var currentWalls = spawn.room.find(FIND_STRUCTURES, {
     filter: (structure) => {
-      return (((structure.structureType == STRUCTURE_TOWER)
-      || (structure.structureType == STRUCTURE_WALL)
-      || (structure.structureType == STRUCTURE_ROAD)
-      || (structure.structureType == STRUCTURE_RAMPART)
-      || (structure.structureType == STRUCTURE_CONTAINER))
+      return ((spawn.memory.autoRepair.indexOf(structure.structureType) != -1)
       && (structure.hits < (structure.hitsMax / 3)));
     }
   });
@@ -28,7 +24,7 @@ function sortDamagedWalls(spawn) {
 function getNumberOfBuilders(spawn) {
   var targets = spawn.room.find(FIND_CONSTRUCTION_SITES, {
     filter: (structure) => {
-      return ((structure.structureType == STRUCTURE_TOWER) || (structure.structureType == STRUCTURE_ROAD) || (structure.structureType == STRUCTURE_CONTAINER));
+      return (spawn.memory.spawnBuilderFor.indexOf(structure.structureType) != -1);
     }
   }
   );

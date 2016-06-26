@@ -19,6 +19,8 @@ if (!Memory.init) {
     spawn.memory.minPopulation = {'harvester': 3, 'upgrader': 3, 'builder': 0, 'repairer': 4};
     spawn.memory.maxPopulation = {'harvester': 3, 'upgrader': 3, 'builder': 5, 'repairer': 5};
     spawn.memory.prioritize = 'harvester';
+    spawn.memory.autoRepair = [STRUCTURE_TOWER, STRUCTURE_WALL, STRUCTURE_ROAD, STRUCTURE_RAMPART, STRUCTURE_CONTAINER];
+    spawn.memory.spawnBuilderFor = [STRUCTURE_TOWER, STRUCTURE_ROAD, STRUCTURE_CONTAINER];
     spawn.repairers = [0,0,0,0,0,0,0,0,0,0];
 
   }
