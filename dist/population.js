@@ -21,11 +21,19 @@ module.exports = function(spawn) {
       if ((!spawn.memory.onlyBuild) || (spawn.memory.onlyBuild == role)) {
         // Missing creeps, spawn them
         misc.debuglog("Trying to spawn new " + role + " creep");
-        var result = spawn.createCreep(spawn.memory.creepSpecs[role], null, {role:role, spawnOrigin:spawn.id});
+        var result;
+        if(role == 'harvester') {
+          result = spawn.createCreep(spawn.memory.creepSpecs[role], null, {role:role, spawnOrigin:spawn.id, fuelStructures:[STRUCTURE_SPAWN,STRUCTURE_EXTENSION,'emergencyEnergy', STRUCTURE_TOWER,STRUCTURE_CONTAINER]});
+        } else {
+          result = spawn.createCreep(spawn.memory.creepSpecs[role], null, {role:role, spawnOrigin:spawn.id});
+        }
+
 
         if (!(result < 0)) {
           misc.debuglog("Spawned new " + role + " creep");
         }
+
+
       }
     } else {
       if (spawn.memory.onlyBuild == role)

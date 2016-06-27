@@ -6,19 +6,19 @@ var roleHarvester = {
 
     if(creep.carry.energy < creep.carryCapacity) {
       if(creep.room.memory.emergencyEnergy) {
-          misc.debuglog(creep + " using emergency energy");
-          var container = Game.getObjectById(creep.room.memory.idOfEmergencyEnergyStorage);
+        misc.debuglog(creep + " using emergency energy");
+        var container = Game.getObjectById(creep.room.memory.idOfEmergencyEnergyStorage);
 
-          if(_.sum(container.store) > creep.carryCapacity) {
-            if(container.transfer(creep, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
+        if(_.sum(container.store) > creep.carryCapacity) {
+          if(container.transfer(creep, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
             creep.moveTo(container, {reusePath: 5});
-        }
+          }
         } else {
           var source = creep.pos.findClosestByRange(FIND_SOURCES);
           if(creep.harvest(source) == ERR_NOT_IN_RANGE) {
             creep.moveTo(source, {reusePath: 5});
           }
-}
+        }
 
       }
       else {
@@ -29,40 +29,47 @@ var roleHarvester = {
       }
     }
     else {
-      var targets = creep.room.find(FIND_STRUCTURES, {
-        filter: (structure) => {
-          return ((structure.structureType == STRUCTURE_EXTENSION || structure.structureType == STRUCTURE_SPAWN
-            || structure.structureType == STRUCTURE_TOWER)  &&
-            structure.energy < structure.energyCapacity);
-          }
-        });
+      var targets;
 
-
-
-        if(targets.length == 0) {
+      for (var i = 0; i < creep.memory.fuelStructures.length; i++) {
+        if(creep.memory.fuelStructures[i] == STRUCTURE_CONTAINER) {
+          targets = creep.room.find(FIND_STRUCTURES, {
+            filter: (structure) => {
+              return ((structure.structureType == STRUCTURE_CONTAINER) && _.sum(structure.store) < structure.storeCapacity);
+            }
+          })
+          if (targets.length > 0)
+            break;
+        } else if (creep.memory.fuelStructures[i] == 'emergencyEnergy') {
           var emergencyEnergyStorage = Game.getObjectById(creep.room.memory.idOfEmergencyEnergyStorage);
 
           if (_.sum(emergencyEnergyStorage.store) < emergencyEnergyStorage.storeCapacity) {
             targets[0] = emergencyEnergyStorage;
             misc.debuglog(creep + " filling emergency storage");
           }
-          else {
-           targets = creep.room.find(FIND_STRUCTURES, {
-              filter: (structure) => {
-                return ((structure.structureType == STRUCTURE_CONTAINER) && (_.sum(structure.store) < structure.storeCapacity));
-              }
-          });
-        }}
-        if(targets.length > 0) {
-          if(creep.transfer(targets[0], RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
-            creep.moveTo(targets[0], {reusePath: 5});
-          }
+          if (targets.length > 0)
+            break;
         } else {
-          if(creep.upgradeController(creep.room.controller) == ERR_NOT_IN_RANGE) {
-            creep.moveTo(creep.room.controller, {reusePath: 5});
-          }
+          targets = creep.room.find(FIND_STRUCTURES, {
+            filter: (structure) => {
+              return (structure.energy < structure.energyCapacity);
+            }
+          })
+          if (targets.length > 0)
+            break;
+        }
+      }
+
+      if(targets.length > 0) {
+        if(creep.transfer(targets[0], RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
+          creep.moveTo(targets[0], {reusePath: 5});
+        }
+      } else {
+        if(creep.upgradeController(creep.room.controller) == ERR_NOT_IN_RANGE) {
+          creep.moveTo(creep.room.controller, {reusePath: 5});
         }
       }
     }
-  };
-  module.exports = roleHarvester;
+      }
+    };
+    module.exports = roleHarvester;
