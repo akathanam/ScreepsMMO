@@ -16,7 +16,7 @@ var roleUpgrader = {
           return (structure.structureType == STRUCTURE_CONTAINER) && (_.sum(structure.store) > creep.carryCapacity);
           }
         });
-      if(container) {
+      if((container) && (container.id != creep.room.memory.idOfEmergencyEnergyStorage)) {
         if(container.transfer(creep, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
           creep.moveTo(container, {reusePath: 5});
         }

@@ -7,15 +7,18 @@ var roleHarvester = {
     if(creep.carry.energy < creep.carryCapacity) {
       if(creep.room.memory.emergencyEnergy) {
           misc.debuglog(creep + " using emergency energy");
-          var container = creep.pos.findClosestByRange(FIND_STRUCTURES, {
-            filter: (structure) => {
-              return (structure.structureType == STRUCTURE_CONTAINER) && (_.sum(structure.store) > 0);
-              }
-            });
+          var container = Game.getObjectById(creep.room.memory.idOfEmergencyEnergyStorage);
 
-        if(container.transfer(creep, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
-          creep.moveTo(container, {reusePath: 5});
+          if(_.sum(container.store) > creep.carryCapacity) {
+            if(container.transfer(creep, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
+            creep.moveTo(container, {reusePath: 5});
         }
+        } else {
+          var source = creep.pos.findClosestByRange(FIND_SOURCES);
+          if(creep.harvest(source) == ERR_NOT_IN_RANGE) {
+            creep.moveTo(source, {reusePath: 5});
+          }
+}
 
       }
       else {
@@ -33,13 +36,23 @@ var roleHarvester = {
             structure.energy < structure.energyCapacity);
           }
         });
+
+
+
         if(targets.length == 0) {
+          var emergencyEnergyStorage = Game.getObjectById(creep.room.memory.idOfEmergencyEnergyStorage);
+
+          if (_.sum(emergencyEnergyStorage.store) < emergencyEnergyStorage.storeCapacity) {
+            targets[0] = emergencyEnergyStorage;
+            misc.debuglog(creep + " filling emergency storage");
+          }
+          else {
            targets = creep.room.find(FIND_STRUCTURES, {
               filter: (structure) => {
                 return ((structure.structureType == STRUCTURE_CONTAINER) && (_.sum(structure.store) < structure.storeCapacity));
               }
           });
-        }
+        }}
         if(targets.length > 0) {
           if(creep.transfer(targets[0], RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
             creep.moveTo(targets[0], {reusePath: 5});
