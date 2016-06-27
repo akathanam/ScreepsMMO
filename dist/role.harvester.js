@@ -6,7 +6,7 @@ var roleHarvester = {
 
     if(creep.carry.energy < creep.carryCapacity) {
       if(creep.room.memory.emergencyEnergy) {
-          misc.debuglog("Creep " + creep + " Using emergency energy");
+          misc.debuglog(creep + " using emergency energy");
           var container = creep.pos.findClosestByRange(FIND_STRUCTURES, {
             filter: (structure) => {
               return (structure.structureType == STRUCTURE_CONTAINER) && (_.sum(structure.store) > 0);

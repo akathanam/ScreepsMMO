@@ -68,11 +68,15 @@ module.exports.loop = function () {
     var room = Game.rooms[name];
 
     if (room.energyAvailable < (room.energyCapacityAvailable/3)) {
-      misc.debuglog("Switching to emergency energy");
-      room.memory.emergencyEnergy = true;
+      if(!room.memory.emergencyEnergy) {
+        misc.debuglog("Switching to emergency energy");
+        room.memory.emergencyEnergy = true;
+      }
     } else {
-      misc.debuglog("Switching to normal energy");
-      room.memory.emergencyEnergy = false;
+      if(room.memory.emergencyEnergy) {
+        misc.debuglog("Switching to normal energy");
+        room.memory.emergencyEnergy = false;
+      }
     }
   }
 
