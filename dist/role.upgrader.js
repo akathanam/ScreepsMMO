@@ -23,7 +23,7 @@ var roleUpgrader = {
       } else {
         var source = creep.pos.findClosestByRange(FIND_SOURCES, {
           filter: (possibleSource) => {
-            return (possibleSource.energy > 1300);
+            return (possibleSource.energy > 800);
           }
         });
 
