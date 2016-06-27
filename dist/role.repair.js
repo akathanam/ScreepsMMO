@@ -21,7 +21,8 @@ var roleRepairer = {
         var numOfReps = spawn.memory.minPopulation['repairer'];
         var pos = Math.floor(Math.random() * (numOfReps+1));
         misc.debuglog(creep.name + ' Repairing Structure pos #' + pos);
-        creep.memory.maxDamagedWall = spawn.memory.idsOfDamagedWalls[pos];
+        if(spawn.memory.idsOfDamagedWalls)
+          creep.memory.maxDamagedWall = spawn.memory.idsOfDamagedWalls[pos];
       }
 
       var target = Game.getObjectById(creep.memory.maxDamagedWall);

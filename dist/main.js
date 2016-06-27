@@ -9,6 +9,10 @@ var population = require('population');
 var garbagecollector = require('garbagecollector');
 var misc = require('misc');
 
+function convertToID(item, index, arr) {
+  arr[index] = item.id;
+}
+
 function sortDamagedWalls(spawn) {
   var currentWalls = spawn.room.find(FIND_STRUCTURES, {
     filter: (structure) => {
@@ -17,8 +21,10 @@ function sortDamagedWalls(spawn) {
     }
   });
 
-  return currentWalls.sort(function(a, b){return a.hits-b.hits});
+  var sortedWalls = currentWalls.sort(function(a, b){return a.hits-b.hits});
+  sortedWalls.forEach(convertToID);
 
+  return sortedWalls;
 }
 
 function getNumberOfBuilders(spawn) {
@@ -88,14 +94,7 @@ module.exports.loop = function () {
 
       misc.debuglog("Sort damaged Structures");
       var sortedWalls = sortDamagedWalls(spawn);
-      var sortedWallsID = [];
-
-      for (var i = 0; i < sortedWalls.length; i++) {
-        sortedWallsID[i] = sortedWalls[i].id;
-      }
-      spawn.memory.idsOfDamagedWalls = sortedWallsID;
-      sortedWalls = null;
-      sortedWallsID = null;
+      spawn.memory.idsOfDamagedWalls = sortedWalls;
     }
   }
 
