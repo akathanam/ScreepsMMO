@@ -60,11 +60,23 @@ module.exports.loop = function () {
       spawn.memory.minPopulation['builder'] = numberOfBuilders;
       spawn.memory.minPopulation['repairer'] = numberOfRepairers;
       population(spawn);
-    }
 
 
 
   }
+  for(var name in Game.rooms) {
+    var room = Game.rooms[name];
+
+    if (room.energyAvailable < (room.energyCapacityAvailable/3)) {
+      misc.debuglog("Switching to emergency energy");
+      room.memory.emergencyEnergy = true;
+    } else {
+      misc.debuglog("Switching to normal energy");
+      room.memory.emergencyEnergy = false;
+    }
+  }
+
+}
   if ((currentTick % 50) == 0) {
 
     for(var name in Game.spawns) {
