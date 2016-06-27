@@ -23,7 +23,7 @@ module.exports = function(spawn) {
         misc.debuglog("Trying to spawn new " + role + " creep");
         var result;
         if(role == 'harvester') {
-          result = spawn.createCreep(spawn.memory.creepSpecs[role], null, {role:role, spawnOrigin:spawn.id, fuelStructures:[STRUCTURE_SPAWN,STRUCTURE_EXTENSION,'emergencyEnergy', STRUCTURE_TOWER,STRUCTURE_CONTAINER]});
+          result = spawn.createCreep(spawn.memory.creepSpecs[role], null, {role:role, spawnOrigin:spawn.id, fuelStructures:[STRUCTURE_SPAWN,STRUCTURE_EXTENSION,'emergencyEnergy',STRUCTURE_CONTAINER]});
         } else {
           result = spawn.createCreep(spawn.memory.creepSpecs[role], null, {role:role, spawnOrigin:spawn.id});
         }

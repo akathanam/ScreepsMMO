@@ -102,6 +102,16 @@ module.exports.loop = function () {
     var creep = Game.creeps[name];
 
     if(creep.memory.role == 'harvester') {
+      if((!creep.room.memory.towerHarvester) && (!creep.memory.specialization)) {
+        creep.memory.specialization = 'tower';
+        creep.memory.fuelStructures = [STRUCTURE_TOWER, STRUCTURE_SPAWN,STRUCTURE_EXTENSION,'emergencyEnergy'];
+        creep.room.memory.towerHarvester = creep.id;
+      } else if((!creep.room.memory.emergencyHarvester) && (!creep.memory.specialization)) {
+        creep.memory.specialization = 'emergency';
+        creep.memory.fuelStructures = ['emergencyEnergy', STRUCTURE_SPAWN,STRUCTURE_EXTENSION, STRUCTURE_CONTAINER];
+        creep.room.memory.emergencyHarvester = creep.id;
+      }
+
       roleHarvester.run(creep);
     }
     if(creep.memory.role == 'builder') {

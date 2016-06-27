@@ -3,6 +3,15 @@ var roleHarvester = {
   /** @param {Creep} creep **/
   run: function(creep) {
     var misc = require('misc');
+    if(creep.ticksToLive == 1) {
+        if(creep.memory.specialization == 'tower') {
+          delete creep.memory.specialization;
+          delete creep.room.memory.towerHarvester;
+        } else if(creep.memory.specialization == 'emergency') {
+          delete creep.memory.specialization;
+          delete creep.room.memory.emergencyHarvester;
+        }
+    }
 
     if(creep.carry.energy < creep.carryCapacity) {
       if(creep.room.memory.emergencyEnergy) {
@@ -29,7 +38,7 @@ var roleHarvester = {
       }
     }
     else {
-      var targets;
+      var targets = [];
 
       for (var i = 0; i < creep.memory.fuelStructures.length; i++) {
         if(creep.memory.fuelStructures[i] == STRUCTURE_CONTAINER) {
