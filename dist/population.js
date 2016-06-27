@@ -15,12 +15,13 @@ module.exports = function(spawn) {
     var creeps = spawn.room.find(FIND_MY_CREEPS, { filter: function(creep){if(creep.memory && creep.memory.role) return creep.memory.role == role; else return false;} });
 
     if (creeps.length < spawn.memory.minPopulation[role]) {
-      if (spawn.memory.prioritize == role)
-      spawn.memory.onlyBuild = role;
+      if (spawn.memory.prioritize == role) {
+        spawn.memory.onlyBuild = role;
+      }
 
       if ((!spawn.memory.onlyBuild) || (spawn.memory.onlyBuild == role)) {
         // Missing creeps, spawn them
-        misc.debuglog("Trying to spawn new " + role + " creep");
+        misc.debuglog("Trying to spawn new " + role + " creep ");
         var result;
         if(role == 'harvester') {
           result = spawn.createCreep(spawn.memory.creepSpecs[role], null, {role:role, spawnOrigin:spawn.id, fuelStructures:[STRUCTURE_SPAWN,STRUCTURE_EXTENSION,'emergencyEnergy',STRUCTURE_CONTAINER]});
@@ -30,7 +31,7 @@ module.exports = function(spawn) {
 
 
         if (!(result < 0)) {
-          misc.debuglog("Spawned new " + role + " creep");
+          misc.debuglog("Spawned new " + role + " creep " + result);
         }
 
 

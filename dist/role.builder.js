@@ -35,8 +35,13 @@ var roleBuilder = {
           creep.moveTo(container, {reusePath: 5});
         }
       } else {
-        var source = creep.pos.findClosestByRange(FIND_SOURCES);
-        if(creep.harvest(source) == ERR_NOT_IN_RANGE) {
+        var source = creep.pos.findClosestByRange(FIND_SOURCES, {
+          filter: (possibleSource) => {
+            return (possibleSource.energy > 1300);
+          }
+        });
+
+        if((source) && (creep.harvest(source) == ERR_NOT_IN_RANGE)) {
           creep.moveTo(source, {reusePath: 5});
         }
       }
