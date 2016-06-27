@@ -22,7 +22,7 @@ var roleRepairer = {
         var pos = Math.floor(Math.random() * (numOfReps+1));
         misc.debuglog(creep.name + ' Repairing Structure pos #' + pos);
         if(spawn.memory.idsOfDamagedWalls)
-          creep.memory.maxDamagedWall = spawn.memory.idsOfDamagedWalls[pos];
+        creep.memory.maxDamagedWall = spawn.memory.idsOfDamagedWalls[pos];
       }
 
       var target = Game.getObjectById(creep.memory.maxDamagedWall);
@@ -36,19 +36,19 @@ var roleRepairer = {
       var container = creep.pos.findClosestByRange(FIND_STRUCTURES, {
         filter: (structure) => {
           return (structure.structureType == STRUCTURE_CONTAINER) && (_.sum(structure.store) > creep.carryCapacity);
-          }
-        });
+        }
+      });
       if((container) && (container.id != creep.room.memory.idOfEmergencyEnergyStorage)) {
         if(container.transfer(creep, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
           creep.moveTo(container, {reusePath: 5});
         }
       } else {
-      var source = creep.pos.findClosestByRange(FIND_SOURCES);
-      if(creep.harvest(source) == ERR_NOT_IN_RANGE) {
-        creep.moveTo(source, {reusePath: 5});
+        var source = creep.pos.findClosestByRange(FIND_SOURCES);
+        if(creep.harvest(source) == ERR_NOT_IN_RANGE) {
+          creep.moveTo(source, {reusePath: 5});
+        }
       }
     }
-  }
   }
 };
 

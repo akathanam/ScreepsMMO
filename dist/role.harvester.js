@@ -39,7 +39,7 @@ var roleHarvester = {
             }
           })
           if (targets.length > 0)
-            break;
+          break;
         } else if (creep.memory.fuelStructures[i] == 'emergencyEnergy') {
           var emergencyEnergyStorage = Game.getObjectById(creep.room.memory.idOfEmergencyEnergyStorage);
 
@@ -48,7 +48,7 @@ var roleHarvester = {
             misc.debuglog(creep + " filling emergency storage");
           }
           if (targets.length > 0)
-            break;
+          break;
         } else {
           targets = creep.room.find(FIND_STRUCTURES, {
             filter: (structure) => {
@@ -56,7 +56,7 @@ var roleHarvester = {
             }
           })
           if (targets.length > 0)
-            break;
+          break;
         }
       }
 
@@ -70,6 +70,6 @@ var roleHarvester = {
         }
       }
     }
-      }
-    };
-    module.exports = roleHarvester;
+  }
+};
+module.exports = roleHarvester;

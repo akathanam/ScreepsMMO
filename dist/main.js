@@ -33,13 +33,13 @@ function getNumberOfBuilders(spawn) {
       return (spawn.memory.spawnBuilderFor.indexOf(structure.structureType) != -1);
     }
   }
-  );
-  var newNumberOfBuilders = 1;
+);
+var newNumberOfBuilders = 1;
 
-  if(targets.length) {
-    newNumberOfBuilders = Math.floor(targets.length / 3) + 1;
-  }
-  return Math.min(newNumberOfBuilders,spawn.memory.maxPopulation['builder']);
+if(targets.length) {
+  newNumberOfBuilders = Math.floor(targets.length / 3) + 1;
+}
+return Math.min(newNumberOfBuilders,spawn.memory.maxPopulation['builder']);
 }
 
 function getNumberOfRepairers(spawn) {
@@ -69,24 +69,24 @@ module.exports.loop = function () {
 
 
 
-  }
-  for(var name in Game.rooms) {
-    var room = Game.rooms[name];
+    }
+    for(var name in Game.rooms) {
+      var room = Game.rooms[name];
 
-    if (room.energyAvailable < (room.energyCapacityAvailable/3)) {
-      if(!room.memory.emergencyEnergy) {
-        misc.debuglog("Switching to emergency energy");
-        room.memory.emergencyEnergy = true;
-      }
-    } else {
-      if(room.memory.emergencyEnergy) {
-        misc.debuglog("Switching to normal energy");
-        room.memory.emergencyEnergy = false;
+      if (room.energyAvailable < (room.energyCapacityAvailable/3)) {
+        if(!room.memory.emergencyEnergy) {
+          misc.debuglog("Switching to emergency energy");
+          room.memory.emergencyEnergy = true;
+        }
+      } else {
+        if(room.memory.emergencyEnergy) {
+          misc.debuglog("Switching to normal energy");
+          room.memory.emergencyEnergy = false;
+        }
       }
     }
-  }
 
-}
+  }
   if ((currentTick % 50) == 0) {
 
     for(var name in Game.spawns) {
