@@ -109,10 +109,10 @@ module.exports.loop = function () {
         misc.debuglog("Selecting new tower harverster: " + creep.name);
       } else if((!creep.room.memory.emergencyHarvester) && (!creep.memory.specialization)) {
         creep.memory.specialization = 'emergency';
-        creep.memory.fuelStructures = ['emergencyEnergy', STRUCTURE_SPAWN,STRUCTURE_EXTENSION, STRUCTURE_CONTAINER];
+        creep.memory.fuelStructures = ['emergencyEnergy', STRUCTURE_SPAWN,STRUCTURE_EXTENSION, STRUCTURE_STORAGE, STRUCTURE_CONTAINER];
         creep.room.memory.emergencyHarvester = creep.id;
         misc.debuglog("selecting new emergency harvester: " + creep.name);
-      }
+      } 
 
       roleHarvester.run(creep);
     }

@@ -35,7 +35,7 @@ var roleRepairer = {
     else {
       var container = creep.pos.findClosestByRange(FIND_STRUCTURES, {
         filter: (structure) => {
-          return (structure.structureType == STRUCTURE_CONTAINER) && (_.sum(structure.store) > creep.carryCapacity);
+          return ((structure.structureType == STRUCTURE_CONTAINER) || (structure.structureType == STRUCTURE_STORAGE)) && (_.sum(structure.store) > creep.carryCapacity);
         }
       });
       if((container) && (container.id != creep.room.memory.idOfEmergencyEnergyStorage)) {
