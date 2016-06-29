@@ -84,6 +84,19 @@ module.exports.loop = function () {
           room.memory.emergencyEnergy = false;
         }
       }
+
+      var storages = room.find(FIND_STRUCTURES, {filter: { structureType: STRUCTURE_STORAGE }});
+
+      if (storages.length > 0) {
+        storage = storages[0];
+
+        if (storage.store[RESOURCE_ENERGY] < room.memory.storeMinEnergy) {
+          room.memory.useStorage = false;
+        } else if (storage.store[RESOURCE_ENERGY] > room.memory.storeMaxEnergy) {
+          room.memoy.useStorage = true;
+        }
+
+      }
     }
 
   }
@@ -112,7 +125,7 @@ module.exports.loop = function () {
         creep.memory.fuelStructures = ['emergencyEnergy', STRUCTURE_SPAWN,STRUCTURE_EXTENSION, STRUCTURE_STORAGE, STRUCTURE_CONTAINER];
         creep.room.memory.emergencyHarvester = creep.id;
         misc.debuglog("selecting new emergency harvester: " + creep.name);
-      } 
+      }
 
       roleHarvester.run(creep);
     }

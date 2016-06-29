@@ -13,7 +13,8 @@ var roleUpgrader = {
     if(!creep.memory.upgrading) {
       var container = creep.pos.findClosestByRange(FIND_STRUCTURES, {
         filter: (structure) => {
-          return ((structure.structureType == STRUCTURE_CONTAINER) || (structure.structureType == STRUCTURE_STORAGE)) && (_.sum(structure.store) > creep.room.memory.storeMinEnergy);
+          return (((structure.structureType == STRUCTURE_CONTAINER) || (structure.structureType == STRUCTURE_STORAGE))
+          && (structure.store[RESOURCE_ENERGY] > creep.room.memory.storeMinEnergy) && creep.room.memory.useStorage);
         }
       });
       if((container) && (container.id != creep.room.memory.idOfEmergencyEnergyStorage)) {
