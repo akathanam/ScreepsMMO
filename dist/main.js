@@ -70,6 +70,9 @@ module.exports.loop = function () {
 
 
     }
+
+    var towers = [];
+
     for(var name in Game.rooms) {
       var room = Game.rooms[name];
 
@@ -86,19 +89,32 @@ module.exports.loop = function () {
       }
 
       var storages = room.find(FIND_STRUCTURES, {filter: { structureType: STRUCTURE_STORAGE }});
-
+      misc.debuglog("checking energy storage");
       if (storages.length > 0) {
         storage = storages[0];
-
+        misc.debuglog("found energy storage");
         if (storage.store[RESOURCE_ENERGY] < room.memory.storeMinEnergy) {
+          misc.debuglog("forbidding creeps from using stored energy");
           room.memory.useStorage = false;
         } else if (storage.store[RESOURCE_ENERGY] > room.memory.storeMaxEnergy) {
-          room.memoy.useStorage = true;
+          misc.debuglog("allowing creeps to use stored energy");
+          room.memory.useStorage = true;
         }
 
       }
+
+      var towersInRoom = room.find(FIND_MY_STRUCTURES, {
+        filter: { structureType: STRUCTURE_TOWER}
+      });
+
+      if (towersInRoom.length > 0) {
+        towers.push.apply(towers, towersInRoom);
+      }
     }
 
+    towers.forEach(convertToID);
+
+    Memory.towers = towers;
   }
   if ((currentTick % 50) == 0) {
 
@@ -140,7 +156,10 @@ module.exports.loop = function () {
     }
 
   }
-  var tower = Game.getObjectById('576e404267da7ce57838e072');
-  roleTower.run(tower);
 
+  if ((Memory.towers) && (Memory.towers.length > 0)) {
+    for (var tIndex in Memory.towers) {
+      roleTower.run(Game.getObjectById(Memory.towers[tIndex]));
+    }
+  }
 }

@@ -3,7 +3,7 @@ var roleTower = {
     var closestHostile = tower.pos.findClosestByRange(FIND_HOSTILE_CREEPS);
     if(closestHostile) {
       tower.attack(closestHostile);
-    } else {
+    } else if (!tower.room.memory.redAlert) {
       var closestDamagedStructure = tower.pos.findClosestByRange(FIND_STRUCTURES, {
         filter: (structure) => structure.hits < Math.min(structure.hitsMax,2000)
       });
