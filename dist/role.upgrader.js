@@ -1,4 +1,4 @@
-var creepfunctions = require('creepfunctions');
+var creeps = require('creeps');
 
 var roleUpgrader = {
 
@@ -13,7 +13,7 @@ var roleUpgrader = {
       creep.memory.upgrading = true;
     }
     if(!creep.memory.upgrading) {
-      creepfunctions.getEnergy(creep);
+      creeps.getEnergy(creep);
     } else {
       if(creep.upgradeController(creep.room.controller) == ERR_NOT_IN_RANGE) {
         creep.moveTo(creep.room.controller, {reusePath: 5});

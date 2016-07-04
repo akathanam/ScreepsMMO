@@ -3,7 +3,7 @@ require('init');
 var roleHarvester = require('role.harvester');
 var roleBuilder = require('role.builder');
 var roleUpgrader = require('role.upgrader');
-var roleRepairer = require('role.repair');
+var roleRepairer = require('role.repairer');
 var roleTower = require('role.tower');
 var roleTransporter = require('role.transporter');
 var population = require('population');

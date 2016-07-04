@@ -9,7 +9,7 @@
 
 var misc = require('misc');
 
-var creepfunctions = require('creepfunctions');
+var creeps = require('creeps');
 
  var roleTransporter = {
 
@@ -32,7 +32,7 @@ var creepfunctions = require('creepfunctions');
      }
 
     if(!creep.memory.transporting) {
-      creepfunctions.getEnergy(creep);
+      creeps.getEnergy(creep);
       /*var source = null;
 
       if(creep.room.memory.emergencyEnergy) {

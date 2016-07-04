@@ -1,4 +1,4 @@
-var creepfunctions = require('creepfunctions');
+var creeps = require('creeps');
 
 var roleBuilder = {
 
@@ -27,7 +27,7 @@ var roleBuilder = {
       }
     }
     else {
-      creepfunctions.getEnergy(creep);
+      creeps.getEnergy(creep);
 
     }
   }

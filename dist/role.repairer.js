@@ -1,5 +1,5 @@
 var misc = require('misc');
-var creepfunctions = require('creepfunctions');
+var creeps = require('creeps');
 
 var roleRepairer = {
 
@@ -34,7 +34,7 @@ var roleRepairer = {
       }
     }
     else {
-      creepfunctions.getEnergy(creep);
+      creeps.getEnergy(creep);
     }
   }
 };
