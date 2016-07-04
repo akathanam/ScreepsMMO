@@ -24,49 +24,11 @@ var creeps = require('creeps');
          }
      }
 
-     if(creep.memory.transporting && creep.carry.energy == 0) {
-       creep.memory.transporting = false;
-     }
-     if(!creep.memory.transporting && creep.carry.energy == creep.carryCapacity) {
-       creep.memory.transporting = true;
-     }
+    creeps.checkEnergy(creep);
 
-    if(!creep.memory.transporting) {
+
+    if(creep.memory.refueling) {
       creeps.getEnergy(creep);
-      /*var source = null;
-
-      if(creep.room.memory.emergencyEnergy) {
-        misc.debuglog(creep + " using emergency energy");
-
-        source = Game.getObjectById(creep.room.memory.idOfEmergencyEnergyStorage);
-
-        if(_.sum(container.store) < creep.carryCapacity) {
-          source = null;
-        }
-
-      }
-
-      if (!source) {
-        source = Game.getObjectById(creep.room.memory.mainEnergyStorage);
-      }
-
-      if (source) {
-        if(source.transfer(creep, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
-          creep.moveTo(source, {reusePath: 5});
-        }
-      } else {
-        source = creep.pos.findClosestByRange(FIND_SOURCES, {
-          filter: (possibleSource) => {
-            return (possibleSource != Game.getObjectById(creep.room.mainEnergySource));
-          }
-        });
-
-        if((source) && (creep.harvest(source) == ERR_NOT_IN_RANGE)) {
-          creep.moveTo(source, {reusePath: 5});
-        }
-
-
-      }*/
     } else {
 
       var target = null;
@@ -138,7 +100,7 @@ var creeps = require('creeps');
          if(creep.transfer(target, RESOURCE_ENERGY, energy) == ERR_NOT_IN_RANGE) {
            creep.moveTo(target, {reusePath: 5});
          }
-       } else {
+       } else if (creep.room.memory.useStorage){
          if(creep.upgradeController(creep.room.controller) == ERR_NOT_IN_RANGE) {
            creep.moveTo(creep.room.controller, {reusePath: 5});
          }

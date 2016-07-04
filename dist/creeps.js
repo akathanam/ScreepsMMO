@@ -1,5 +1,5 @@
 module.exports.getEnergy = function(creep) {
-  if(creep.room.memory.useStorage) {
+  if((creep.room.memory.useStorage) || (creep.memory.role == 'transporter')) {
     var container = Game.getObjectById(creep.room.memory.mainEnergyStorage);
 
 
@@ -17,4 +17,15 @@ module.exports.getEnergy = function(creep) {
       creep.moveTo(source, {reusePath: 5});
     }
   }
+};
+
+module.exports.checkEnergy = function(creep) {
+  if(!creep.memory.refueling && creep.carry.energy == 0) {
+    creep.memory.refueling = true;
+  }
+
+  if(creep.memory.refueling && creep.carry.energy == creep.carryCapacity) {
+    creep.memory.refueling = false;
+  }
+
 };

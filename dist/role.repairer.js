@@ -6,17 +6,9 @@ var roleRepairer = {
 
   /** @param {Creep} creep **/
   run: function(creep) {
+    creeps.checkEnergy(creep);
 
-    if(creep.memory.repairing && creep.carry.energy == 0) {
-      creep.memory.repairing = false;
-    }
-
-    if(!creep.memory.repairing && creep.carry.energy == creep.carryCapacity) {
-      creep.memory.repairing = true;
-      creep.memory.maxDamagedWall = null;
-    }
-
-    if(creep.memory.repairing) {
+    if(!creep.memory.refueling) {
       if(!creep.memory.maxDamagedWall) {
         var spawn = Game.getObjectById(creep.memory.spawnOrigin)
         var numOfReps = spawn.memory.minPopulation['repairer'];
@@ -34,6 +26,7 @@ var roleRepairer = {
       }
     }
     else {
+      creep.memory.maxDamagedWall = null;
       creeps.getEnergy(creep);
     }
   }

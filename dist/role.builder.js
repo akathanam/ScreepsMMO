@@ -5,15 +5,16 @@ var roleBuilder = {
   /** @param {Creep} creep **/
   run: function(creep) {
 
+    creeps.checkEnergy(creep);
 
-    if(creep.memory.building && creep.carry.energy == 0) {
+  /*  if(creep.memory.building && creep.carry.energy == 0) {
       creep.memory.building = false;
     }
     if(!creep.memory.building && creep.carry.energy == creep.carryCapacity) {
       creep.memory.building = true;
-    }
+    }*/
 
-    if(creep.memory.building) {
+    if(!creep.memory.refueling) {
       var targets = creep.room.find(FIND_CONSTRUCTION_SITES);
       if(targets.length) {
         if((creep.pos.findInRange(FIND_SOURCES, 2).length > 2) || (creep.build(targets[0]) == ERR_NOT_IN_RANGE)) {

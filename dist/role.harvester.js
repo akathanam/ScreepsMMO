@@ -1,10 +1,13 @@
+var creeps = require('creeps');
+
 var roleHarvester = {
 
   /** @param {Creep} creep **/
   run: function(creep) {
 
+    creeps.checkEnergy(creep);
 
-    if(creep.carry.energy < creep.carryCapacity) {
+    if(creep.memory.refueling) {
         var source = Game.getObjectById(creep.room.memory.mainEnergySource);
 
         if(source.energy < creep.carryCapacity) {

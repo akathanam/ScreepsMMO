@@ -89,10 +89,9 @@ module.exports.loop = function () {
         }
       }
 
-      var storages = room.find(FIND_STRUCTURES, {filter: { structureType: STRUCTURE_STORAGE }});
+      var storage = Game.getObjectById(room.memory.mainEnergyStorage);
       misc.debuglog("checking energy storage");
-      if (storages.length > 0) {
-        storage = storages[0];
+      if (storage) {
         misc.debuglog("found energy storage");
         if (storage.store[RESOURCE_ENERGY] < room.memory.storeMinEnergy) {
           misc.debuglog("forbidding creeps from using stored energy");
