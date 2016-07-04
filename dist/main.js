@@ -5,6 +5,7 @@ var roleBuilder = require('role.builder');
 var roleUpgrader = require('role.upgrader');
 var roleRepairer = require('role.repair');
 var roleTower = require('role.tower');
+var roleTransporter = require('role.transporter');
 var population = require('population');
 var garbagecollector = require('garbagecollector');
 var misc = require('misc');
@@ -130,19 +131,22 @@ module.exports.loop = function () {
   for(var name in Game.creeps) {
     var creep = Game.creeps[name];
 
-    if(creep.memory.role == 'harvester') {
+    if(creep.memory.role == 'transporter') {
       if((!creep.room.memory.towerHarvester) && (!creep.memory.specialization)) {
         creep.memory.specialization = 'tower';
         creep.memory.fuelStructures = [STRUCTURE_TOWER, STRUCTURE_SPAWN,STRUCTURE_EXTENSION,'emergencyEnergy'];
         creep.room.memory.towerHarvester = creep.id;
-        misc.debuglog("Selecting new tower harverster: " + creep.name);
+        misc.debuglog("Selecting new tower transporter: " + creep.name);
       } else if((!creep.room.memory.emergencyHarvester) && (!creep.memory.specialization)) {
         creep.memory.specialization = 'emergency';
-        creep.memory.fuelStructures = ['emergencyEnergy', STRUCTURE_SPAWN,STRUCTURE_EXTENSION, STRUCTURE_STORAGE, STRUCTURE_CONTAINER];
+        creep.memory.fuelStructures = ['emergencyEnergy', STRUCTURE_SPAWN,STRUCTURE_EXTENSION, STRUCTURE_CONTAINER];
         creep.room.memory.emergencyHarvester = creep.id;
-        misc.debuglog("selecting new emergency harvester: " + creep.name);
+        misc.debuglog("selecting new emergency transporter: " + creep.name);
       }
 
+      roleTransporter.run(creep);
+    }
+    if(creep.memory.role == 'harvester') {
       roleHarvester.run(creep);
     }
     if(creep.memory.role == 'builder') {

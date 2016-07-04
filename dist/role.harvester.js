@@ -2,83 +2,32 @@ var roleHarvester = {
 
   /** @param {Creep} creep **/
   run: function(creep) {
-    var misc = require('misc');
-    if(creep.ticksToLive == 1) {
-        if(creep.memory.specialization == 'tower') {
-          delete creep.memory.specialization;
-          delete creep.room.memory.towerHarvester;
-        } else if(creep.memory.specialization == 'emergency') {
-          delete creep.memory.specialization;
-          delete creep.room.memory.emergencyHarvester;
-        }
-    }
+
 
     if(creep.carry.energy < creep.carryCapacity) {
-      if(creep.room.memory.emergencyEnergy) {
-        misc.debuglog(creep + " using emergency energy");
-        var container = Game.getObjectById(creep.room.memory.idOfEmergencyEnergyStorage);
+        var source = Game.getObjectById(creep.room.memory.mainEnergySource);
 
-        if(_.sum(container.store) > creep.carryCapacity) {
-          if(container.transfer(creep, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
-            creep.moveTo(container, {reusePath: 5});
-          }
-        } else {
-          var source = creep.pos.findClosestByRange(FIND_SOURCES);
-          if(creep.harvest(source) == ERR_NOT_IN_RANGE) {
-            creep.moveTo(source, {reusePath: 5});
-          }
+        if(source.energy < creep.carryCapacity) {
+          source = creep.pos.findClosestByRange(FIND_SOURCES, {
+            filter: (possibleSource) => {
+              return (possibleSource.energy > creep.carryCapacity);
+            }
+          });
         }
-
-      }
-      else {
-        var source = creep.pos.findClosestByRange(FIND_SOURCES);
         if(creep.harvest(source) == ERR_NOT_IN_RANGE) {
-          creep.moveTo(source, {reusePath: 5});
+          creep.moveTo(source);
         }
-      }
     }
     else {
-      var targets = [];
+      var container = Game.getObjectById(creep.room.memory.mainEnergyStorage);
 
-      for (var i = 0; i < creep.memory.fuelStructures.length; i++) {
-        if((creep.memory.fuelStructures[i] == STRUCTURE_CONTAINER) || (creep.memory.fuelStructures[i] == STRUCTURE_STORAGE)) {
-          targets = creep.room.find(FIND_STRUCTURES, {
-            filter: (structure) => {
-              return (((structure.structureType == STRUCTURE_CONTAINER) || (structure.structureType == STRUCTURE_STORAGE)) && _.sum(structure.store) < structure.storeCapacity);
-            }
-          })
-          if (targets.length > 0)
-          break;
-        } else if (creep.memory.fuelStructures[i] == 'emergencyEnergy') {
-          var emergencyEnergyStorage = Game.getObjectById(creep.room.memory.idOfEmergencyEnergyStorage);
-
-          if (_.sum(emergencyEnergyStorage.store) < emergencyEnergyStorage.storeCapacity) {
-            targets[0] = emergencyEnergyStorage;
-            misc.debuglog(creep + " filling emergency storage");
-          }
-          if (targets.length > 0)
-          break;
-        } else {
-          targets = creep.room.find(FIND_STRUCTURES, {
-            filter: (structure) => {
-              return (structure.energy < structure.energyCapacity);
-            }
-          })
-          if (targets.length > 0)
-          break;
-        }
-      }
-
-      if(targets.length > 0) {
-        if(creep.transfer(targets[0], RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
-          creep.moveTo(targets[0], {reusePath: 5});
-        }
-      } else {
-        if(creep.upgradeController(creep.room.controller) == ERR_NOT_IN_RANGE) {
-          creep.moveTo(creep.room.controller, {reusePath: 5});
+      if(container) {
+        if(creep.transfer(container, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
+          creep.moveTo(container, {reusePath: 5});
         }
       }
     }
   }
 };
+
 module.exports = roleHarvester;

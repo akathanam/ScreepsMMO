@@ -16,6 +16,7 @@ if (!Memory.init) {
     spawn.memory.creepSpecs['upgrader'] = [WORK,CARRY,CARRY,MOVE];
     spawn.memory.creepSpecs['builder'] = [WORK,CARRY,CARRY,MOVE];
     spawn.memory.creepSpecs['repairer'] = [WORK,CARRY,CARRY,MOVE];
+    spawn.memory.creepSpecs['transporter'] = [WORK,CARRY,CARRY,CARRY,MOVE,MOVE];
     spawn.memory.minPopulation = {'harvester': 3, 'upgrader': 3, 'builder': 0, 'repairer': 4};
     spawn.memory.maxPopulation = {'harvester': 3, 'upgrader': 3, 'builder': 4, 'repairer': 4};
     spawn.memory.prioritize = 'harvester';

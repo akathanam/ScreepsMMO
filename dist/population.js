@@ -9,7 +9,7 @@
 var misc = require('misc');
 
 module.exports = function(spawn) {
-  var roles = ['harvester', 'upgrader', 'builder', 'repairer'];
+  var roles = ['harvester', 'upgrader', 'builder', 'repairer', 'transporter'];
   for (var i in roles) {
     var role = roles[i];
     var creeps = spawn.room.find(FIND_MY_CREEPS, { filter: function(creep){if(creep.memory && creep.memory.role) return creep.memory.role == role; else return false;} });
@@ -23,8 +23,8 @@ module.exports = function(spawn) {
         // Missing creeps, spawn them
         misc.debuglog("Trying to spawn new " + role + " creep ");
         var result;
-        if(role == 'harvester') {
-          result = spawn.createCreep(spawn.memory.creepSpecs[role], null, {role:role, spawnOrigin:spawn.id, fuelStructures:[STRUCTURE_SPAWN,STRUCTURE_EXTENSION,'emergencyEnergy',STRUCTURE_CONTAINER, STRUCTURE_STORAGE]});
+        if(role == 'transporter') {
+          result = spawn.createCreep(spawn.memory.creepSpecs[role], null, {role:role, spawnOrigin:spawn.id, fuelStructures:[STRUCTURE_SPAWN,STRUCTURE_EXTENSION,'emergencyEnergy',STRUCTURE_CONTAINER]});
         } else {
           result = spawn.createCreep(spawn.memory.creepSpecs[role], null, {role:role, spawnOrigin:spawn.id});
         }

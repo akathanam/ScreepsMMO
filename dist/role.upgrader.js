@@ -11,20 +11,17 @@ var roleUpgrader = {
       creep.memory.upgrading = true;
     }
     if(!creep.memory.upgrading) {
-      var container = creep.pos.findClosestByRange(FIND_STRUCTURES, {
-        filter: (structure) => {
-          return (((structure.structureType == STRUCTURE_CONTAINER) || (structure.structureType == STRUCTURE_STORAGE))
-          && (structure.store[RESOURCE_ENERGY] > creep.room.memory.storeMinEnergy) && creep.room.memory.useStorage);
-        }
-      });
-      if((container) && (container.id != creep.room.memory.idOfEmergencyEnergyStorage)) {
-        if(container.transfer(creep, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
+      if(creep.room.memory.useStorage) {
+        var container = Game.getObjectById(creep.room.memory.mainEnergyStorage);
+
+
+        if((container) && (container.transfer(creep, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE)) {
           creep.moveTo(container, {reusePath: 5});
         }
       } else {
         var source = creep.pos.findClosestByRange(FIND_SOURCES, {
           filter: (possibleSource) => {
-            return (possibleSource.energy > 800);
+            return (possibleSource != Game.getObjectById(creep.room.mainEnergySource));
           }
         });
 
@@ -32,8 +29,8 @@ var roleUpgrader = {
           creep.moveTo(source, {reusePath: 5});
         }
       }
-    }
-    else {
+
+    } else {
       if(creep.upgradeController(creep.room.controller) == ERR_NOT_IN_RANGE) {
         creep.moveTo(creep.room.controller, {reusePath: 5});
       }
