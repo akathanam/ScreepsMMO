@@ -7,11 +7,15 @@
  * mod.thing == 'a thing'; // true
  */
 
+var misc = require('misc');
+
+var creepfunctions = require('creepfunctions');
+
  var roleTransporter = {
 
    /** @param {Creep} creep **/
    run: function(creep) {
-     var misc = require('misc');
+
      if(creep.ticksToLive == 1) {
          if(creep.memory.specialization == 'tower') {
            delete creep.room.memory.towerHarvester;
@@ -20,8 +24,16 @@
          }
      }
 
-    if(creep.carry.energy < creep.carryCapacity) {
-      var source = null;
+     if(creep.memory.transporting && creep.carry.energy == 0) {
+       creep.memory.transporting = false;
+     }
+     if(!creep.memory.transporting && creep.carry.energy == creep.carryCapacity) {
+       creep.memory.transporting = true;
+     }
+
+    if(!creep.memory.transporting) {
+      creepfunctions.getEnergy(creep);
+      /*var source = null;
 
       if(creep.room.memory.emergencyEnergy) {
         misc.debuglog(creep + " using emergency energy");
@@ -54,7 +66,7 @@
         }
 
 
-      }
+      }*/
     } else {
 
       var target = null;
