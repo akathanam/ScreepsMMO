@@ -3,7 +3,7 @@ module.exports.getEnergy = function(creep) {
     var container = Game.getObjectById(creep.room.memory.mainEnergyStorage);
 
 
-    if((container) && (container.transfer(creep, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE)) {
+    if((container) && (creep.withdraw(container, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE)) {
       creep.moveTo(container, {reusePath: 5});
     }
   } else {
