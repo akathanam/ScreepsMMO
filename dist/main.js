@@ -53,6 +53,7 @@ function getNumberOfRepairers(spawn) {
 }
 
 module.exports.loop = function () {
+  return;
   var currentTick = Game.time;
 
   if ((currentTick % 20) == 0) {
